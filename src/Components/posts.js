@@ -2,14 +2,21 @@ import React from "react"
 
 const Posts = ({apps}) =>{
    
-    while(apps.data === undefined){
-    return(
-        
+    while(apps === undefined){
+    return( 
        <div>Apps loading....</div>
     )
 }
     return(
-        <div>{apps.data[0].name}</div>
+        <ul style={{textAlign:"center"}} className= "list-group mb-4">
+        {apps.map(app=>(
+            <li className= "list-group-item" key={app.id} style= {{display:"flex", justifyContent:"center", width:"300px"}}>
+                ID: {app.id}
+                <br></br>
+                Name: {app.name}
+            </li>
+        ))}
+        </ul>
     )
 }
 
