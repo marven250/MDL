@@ -2,7 +2,7 @@ import React from "react"
 
 const Pagination = (propss)=>{
     const pageNumbers = []
-        for(let i=1; i<Math.ceil(propss.totalApps/propss.appsPerPage);i++){
+        for(let i=1; i<=Math.ceil(propss.totalApps/propss.appsPerPage);i++){
             pageNumbers.push(i)
         }
         
