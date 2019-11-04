@@ -7,7 +7,9 @@ const Posts = (propss) =>{
        <div>Apps loading....</div>
     )
 }
-console.log(propss)
+        
+
+    if(propss.identification === "id"){
     return(
         <ul style={{textAlign:"center"}} className= "list-group mb-4">
         {propss.apps.map(app=>(
@@ -19,6 +21,18 @@ console.log(propss)
         ))}
         </ul>
     )
+} else{
+    return(
+        <ul style={{ textAlign: "center" }} className="list-group mb-4">
+            {propss.apps.map(app => (
+                <li className="list-group-item" key={app.id} style={{ display: "flex", justifyContent: "center", width: "300px" }}>
+                    Name: {app.name}     
+                    <br></br>
+                    ID: {app.id}
+                </li>
+            ))}
+        </ul>
+    )
 }
-
+}
 export default Posts

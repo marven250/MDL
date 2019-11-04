@@ -10,8 +10,8 @@ const Pagination = (propss)=>{
         <nav>
             <ul className= "pagination">
                 {pageNumbers.map(number=>(
-                    <li key= {number} className= "page-item">
-                        <a onClick={()=>propss.paginate(number)} href= "#" className= "page-link">
+                    <li id="pageNumber" key= {number} className= "page-item">
+                        <a  onClick={()=>propss.paginate(number)} href= "#" className= "page-link">
                            {number} 
                         </a>
                     </li>

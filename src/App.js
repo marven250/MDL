@@ -11,10 +11,11 @@ export default class App extends React.Component {
     super(props)
     this.state = {currentPage: 1,
                   key: "id",
-                  start: 1,
-                  end: 100,
+                  start: 0,
+                  end: 99,
                   max: 50,
-                  order: "asc"
+                  order: "asc",
+                  reversedData: []
     }
   }
 
@@ -22,7 +23,14 @@ export default class App extends React.Component {
   componentDidMount() {
     const fetchApps = async () => {
       const res = await axios.get("https://mdlive-api.herokuapp.com/apps")
-      this.setState({ data: res.data.data })
+      const res2 = await axios.get("https://mdlive-api.herokuapp.com/apps")
+      console.log(res)
+      let reverse = res2.data.data.reverse()
+      this.setState({ data: res.data.data,
+              reversedData: reverse
+      })
+      
+      
       //(res => res.json())
       //  .then(response => {
       //  this.setState({ data: response.data })
@@ -33,11 +41,11 @@ export default class App extends React.Component {
     fetchApps()
   }
 
+
   
   render(){
     while (this.state.data === undefined) {
       return (
-
         <div>Apps loading....</div>
       )
     }
@@ -46,29 +54,45 @@ export default class App extends React.Component {
       this.setState({currentPage:pageNumber})
     }
     var currentPage= this.state.currentPage
-    const appsPerPage = 5
+    const appsPerPage = this.state.max
     const indexOfLastApp = currentPage * appsPerPage
     const indexOfFirstApp = indexOfLastApp - appsPerPage
-    const currentApps = this.state.data.slice(indexOfFirstApp, indexOfLastApp)
 
-  
+    var currentApps 
+    // if (this.state.order === "asc") {
+    //   currentApps = this.state.data.slice(this.state.start, this.state.end).slice(indexOfFirstApp, indexOfLastApp);
+    // }
+
+    let starter =this.state.start
+    let ender = this.state.end
+
+    if (this.state.order === "desc"){
+      if(starter === -1) starter = 0
+     currentApps= this.state.reversedData.slice(starter, ender).slice(indexOfFirstApp, indexOfLastApp);
+    }else{
+      if (starter === -1) starter = 0
+      currentApps = this.state.data.slice(starter, ender).slice(indexOfFirstApp, indexOfLastApp);
+    }
+    
+    
+
     let arrange = (e)=>{
       e.preventDefault()
       let byValue = document.getElementById("by").value
-      console.log("byValue", byValue)
+     // console.log("byValue", byValue)
       let startValue = document.getElementById("start").value
-      console.log("startValue", startValue)
+     // console.log("startValue", startValue)
       let endValue = document.getElementById("end").value
-      console.log("endValue", endValue)
+     // console.log("endValue", endValue)
       let maxValue = document.getElementById("max").value
-      console.log("maxValue", maxValue)
+     // console.log("maxValue", maxValue)
       let orderValue = document.getElementById("order").value
-      console.log("orderValue", orderValue)
+     // console.log("orderValue", orderValue)
       this.setState({
         key: byValue,
-        start: startValue,
-        end: endValue,
-        max: maxValue,
+        start: (startValue-1) || 0,
+        end: endValue || 99,
+        max: maxValue || 50,
         order: orderValue
       })
     }
@@ -76,10 +100,10 @@ export default class App extends React.Component {
   return (
     <div className= "container" >
     <h1 className= "text-primary mb-4">MDLive Application Pagination</h1>
-      <Posts key= {this.state.key} apps={currentApps} />
+      <Posts start={this.state.start} end= {this.state.end} order={this.state.order} identification= {this.state.key} apps={currentApps} />
       <Pagination paginate= {paginate} appsPerPage= {appsPerPage} totalApps= {this.state.data.length} />
-      <form onSubmit={arrange} style= {{width: "30%", position: "fixed", right: "1%", top: "0%"}}>
-        <h3 style= {{textAlign: "center"}} className="text-primary mb-4">Range</h3>
+      <form  style= {{width: "30%", position: "fixed", right: "1%", top: "8%"}}>
+        {/* <h3 style= {{textAlign: "center"}} className="text-primary mb-4">Range</h3> */}
         <label className="input-group-text" for= "by">by:</label>
         <select className="form-control" id="by">
             <option>id</option>
@@ -96,7 +120,8 @@ export default class App extends React.Component {
           <option>asc</option>
           <option>desc</option>
         </select>
-        <input className="form-control" id="submit" type="submit" value="submit"></input>
+        <input onClick={arrange} className="input-group-text" id="submit" type="submit" name="submit"></input>
+        {/* <label  for="submit">Double Click 'submit' button To Update Range</label> */}
       </form>
     </div>
   );
