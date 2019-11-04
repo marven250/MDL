@@ -1,15 +1,16 @@
 import React from "react"
 
-const Posts = ({apps}) =>{
+const Posts = (propss) =>{
    
-    while(apps === undefined){
+    while(propss.apps === undefined){
     return( 
        <div>Apps loading....</div>
     )
 }
+console.log(propss)
     return(
         <ul style={{textAlign:"center"}} className= "list-group mb-4">
-        {apps.map(app=>(
+        {propss.apps.map(app=>(
             <li className= "list-group-item" key={app.id} style= {{display:"flex", justifyContent:"center", width:"300px"}}>
                 ID: {app.id}
                 <br></br>

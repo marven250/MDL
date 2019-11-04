@@ -12,7 +12,7 @@ var express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use("/apps", require("./ApiDisplay"))
+app.use("/apps", require("../App"))
 
 
 app.use(function (req, res) {
