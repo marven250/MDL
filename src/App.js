@@ -120,7 +120,7 @@ export default class App extends React.Component {
           <option>asc</option>
           <option>desc</option>
         </select>
-        <input onClick={arrange} className="input-group-text" id="submit" type="submit" name="submit"></input>
+        <input onClick={arrange} className="input-group-text" id="submit" type="submit" name="submit" value="Submit Query"></input>
         {/* <label  for="submit">Double Click 'submit' button To Update Range</label> */}
       </form>
     </div>
