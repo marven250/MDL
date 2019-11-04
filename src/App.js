@@ -103,7 +103,7 @@ export default class App extends React.Component {
       <Posts start={this.state.start} end= {this.state.end} order={this.state.order} identification= {this.state.key} apps={currentApps} />
       <Pagination paginate= {paginate} appsPerPage= {appsPerPage} totalApps= {this.state.data.length} />
       <form  style= {{width: "30%", position: "fixed", right: "1%", top: "8%"}}>
-        {/* <h3 style= {{textAlign: "center"}} className="text-primary mb-4">Range</h3> */}
+         <h3 style= {{textAlign: "center"}} className="text-primary mb-4">Params/Range</h3>
         <label className="input-group-text" for= "by">by:</label>
         <select className="form-control" id="by">
             <option>id</option>
